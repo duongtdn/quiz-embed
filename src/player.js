@@ -4,42 +4,39 @@ import validate from './validate'
 
 const ORIGIN = 'http://localhost:3100';
 
+export default class {
+  constructor() {
+    window.addEventListener('message', this.receiveMessage.bind(this));
+  }
 
-console.log('player script')
+  receiveMessage(e) {
 
-function receiveMessage(e) {
-  updateDom(e.origin, e.data)
+    this._evt = e;
 
-  switch (validate(e.data)) {
-    case 'ping':
-      notifyReady(e);
-      break;
-    case 'load':
-      notifyLoaded(e);
-      break;
-    default:
-      break;
+    switch (validate(e.data)) {
+      case 'ping':
+        this.notifyReady();
+        break;
+      case 'load':
+        this.notifyLoaded();
+        break;
+      default:
+        break;
+    }
+  
+  }
+
+  notifyReady() {
+    const {source, origin} = this._evt;
+    if (!source) { return }
+    source.postMessage('quizPlayer.pong', origin)
+  }
+
+  notifyLoaded() {
+    const {source, origin, data} = this._evt;
+    if (!source && !data) { return }
+    const [cmd, src] = data.split('/')
+    source.postMessage('quizPlayer.loaded', origin)
   }
 
 }
-
-function updateDom(o, d) {
-  const origin = document.getElementById('origin')
-  const data = document.getElementById('data')
-
-  origin.innerHTML = o;
-  data.innerHTML = d;
-}
-
-function notifyReady({source, origin}) {
-  source.postMessage('quizPlayer.pong', origin)
-}
-
-function notifyLoaded({source, origin, data}) {
-  const [cmd, src] = data.split('/')
-  source.postMessage('quizPlayer.loaded', origin)
-}
-
-updateDom('the origin', 'the data')
-
-window.addEventListener('message', receiveMessage);

@@ -1,6 +1,6 @@
 "use strict"
 
-import Player from './src/api'
+import Player from './api'
 
 /* global Quiz */
 window.Quiz = { Player }

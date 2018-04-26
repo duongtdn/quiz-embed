@@ -2,8 +2,8 @@ const path = require("path");
 
 module.exports = {
     entry: {
-        api: ["./quiz.api.js"],
-        player: ["./quiz.player.js"]
+        api: ["./src/quiz.api.js"],
+        player: ["./src/quiz.player.js"]
     },
     module: {
         rules: [
