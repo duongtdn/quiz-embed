@@ -3,6 +3,6 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 
-import Quiz from './Quiz'
+import QuizData from './QuizData'
 
-render(<Quiz />, document.getElementById('root'))
+render(<QuizData />, document.getElementById('root'))
