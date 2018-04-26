@@ -30,8 +30,8 @@ export default class Player {
 
   }
 
-  load() {
-
+  load(src) {
+    this._post(`quizApi.load/${src}`)
   }
 
   _receiveMessage(e) {
@@ -40,8 +40,7 @@ export default class Player {
     }
     switch (e.data) {
       case 'quizPlayer.pong':
-        this.tm && clearInterval(this.tm);
-        this.events && this.events.onReady && this.events.onReady();
+        this._onPlayerReady()
         break;
       case 'quizPlayer.loaded':
         this.events && this.events.onLoaded && this.events.onLoaded();
@@ -64,6 +63,11 @@ export default class Player {
 
   _ping() {    
     return this._post('quizApi.ping');
+  }
+
+  _onPlayerReady() {
+    this.tm && clearInterval(this.tm);
+    this.events && this.events.onReady && this.events.onReady();
   }
 
 }
