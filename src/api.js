@@ -45,6 +45,9 @@ export default class Player {
       case 'quizPlayer.loaded':
         this.events && this.events.onLoaded && this.events.onLoaded();
         break;
+      case 'quizPlayer.error':
+        this.events && this.events.onError && this.events.onError();
+        break;
       default:
         break;
     }

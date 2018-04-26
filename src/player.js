@@ -18,7 +18,7 @@ export default class {
         this.notifyReady();
         break;
       case 'load':
-        this.notifyLoaded();
+        this.loadQuiz();
         break;
       default:
         break;
@@ -32,11 +32,22 @@ export default class {
     source.postMessage('quizPlayer.pong', origin)
   }
 
-  notifyLoaded() {
+  loadQuiz() {
     const {source, origin, data} = this._evt;
     if (!source && !data) { return }
     const [cmd, src] = data.split('/')
-    source.postMessage('quizPlayer.loaded', origin)
+    /* asyn load content */
+    this.getQuizData(src, (err) => {
+      if (err) {
+        source.postMessage('quizPlayer.error', origin)
+      } else {
+        source.postMessage('quizPlayer.loaded', origin)
+      }
+    })
+  }
+
+  getQuizData(src, done) {
+    setTimeout(() => done(), 1000);
   }
 
 }
