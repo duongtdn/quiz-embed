@@ -7,16 +7,47 @@ import Quiz from './Quiz'
 
 export default class QuizData extends Component {
   constructor(props) {
-    super (props);
+    super(props);
+
+    this.state = {
+      error: null,
+      data: null
+    }
+
   }
 
   componentDidMount() {
-    this.player = new Player();
+    this.player = new Player({
+      onError: this.onError.bind(this),
+      onLoaded: this.onLoaded.bind(this)
+    });
   }
 
   render() {
     return (
-      <Quiz />
+      <Quiz data = {this.state.data}
+            error = {this.state.error}
+      />
     )
   }
+
+  onError(error) {
+    this.setState({ error })
+  }
+
+  onLoaded(data) {
+    if (data && data.question) {
+      data.question = this.sanitize(data.question)
+    }
+    this.setState({ data })
+  }
+
+  sanitize(str) {
+    const sanitized = str.replace(/on\w*\W*\w*\W*/igm, "")  // remove binded events
+                         .replace(/\r?\n|\r/g,"")           // remove new line
+                         .replace(/>\s+</g,"><")            // remove space between el
+                         .trim();
+    return sanitized
+  }
+
 }
