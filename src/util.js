@@ -9,7 +9,7 @@ const _ = {};
   };
 });
 
-export default function(message) {
+function validate (message) {
 
   if (!_.isString(message)) {
     return false
@@ -23,7 +23,6 @@ export default function(message) {
     return 'load'
   }
 
-
 }
 
-
+export { _, validate }
