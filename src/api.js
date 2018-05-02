@@ -41,15 +41,18 @@ export default class Player {
     switch (e.data) {
       case 'quizPlayer.pong':
         this._onPlayerReady()
-        break;
+        break
       case 'quizPlayer.loaded':
         this.events && this.events.onLoaded && this.events.onLoaded();
-        break;
+        break
       case 'quizPlayer.error':
         this.events && this.events.onError && this.events.onError();
-        break;
+        break
+      case 'quizPlayer.finish':
+      this.events && this.events.onFinished && this.events.onFinished();
+        break
       default:
-        break;
+        break
     }
   }
 

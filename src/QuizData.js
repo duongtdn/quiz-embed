@@ -14,6 +14,8 @@ export default class QuizData extends Component {
       data: null
     }
 
+    this.finish = this.finish.bind(this);
+
   }
 
   componentDidMount() {
@@ -27,6 +29,7 @@ export default class QuizData extends Component {
     return (
       <Quiz data = {this.state.data}
             error = {this.state.error}
+            finish = {this.finish}
       />
     )
   }
@@ -40,6 +43,10 @@ export default class QuizData extends Component {
       data.question = this.sanitize(data.question)
     }
     this.setState({ data })
+  }
+
+  finish(id) {
+    this.player.finish(id)
   }
 
   sanitize(str) {

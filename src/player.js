@@ -68,6 +68,8 @@ export default class {
             <label>Other</label>
           </p>
         </form>
+        <hr />
+        <button id="btn-continue">Continue</button>
       </div>
     `
     const data = {
@@ -79,6 +81,12 @@ export default class {
       }
     }
     setTimeout(() => done(null, data), 1000);
+  }
+
+  finish(id) {
+    const {source, origin} = this._evt;
+    if (!source) { return }
+    source.postMessage('quizPlayer.finish', origin)
   }
 
 }

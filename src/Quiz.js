@@ -45,6 +45,10 @@ export default class Quiz extends Component {
     console.log(this.userAnswer)
   }
 
+  finish(id, evt) {
+    this.props.finish(id);
+  }
+
   bindEvent(quiz) {
 
     const answer = quiz.answer;
@@ -57,11 +61,15 @@ export default class Quiz extends Component {
       if (el.props.children) {
         children = React.Children.map(el.props.children, child => deepClone(child))
       }
+      /* bind events to elmenent */
+      let event = '';
+      let fn = '';
+
       if (el.props.id && el.props.id in answer) {
-        let fn = '';
         if (el.type && el.type === 'input') {
-          if (el.props.type)
-          switch (el.props.type) {
+          event = 'onChange';
+          const type = el.props.type || '';
+          switch (type) {
             case 'radio':
               fn = 'onRadioChange';
               break
@@ -77,8 +85,18 @@ export default class Quiz extends Component {
           }
         } else {
           throw new Error('The answer must be an input type')
-        }
-        return React.cloneElement(el, {onChange: (evt) => this[fn](el.props.id, evt)})
+        }          
+      }
+
+      if (el.props.id && el.props.id === 'btn-continue') {
+        event = 'onClick';
+        fn = 'finish';
+      }
+
+      if (fn.length > 0) {
+        const prop = {};
+        prop[event] = (evt) => this[fn](el.props.id, evt);
+        return React.cloneElement(el, prop)  
       } else {
         if (children.length > 0) {
           return React.cloneElement(el, {}, children)
