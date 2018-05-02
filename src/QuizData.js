@@ -43,9 +43,9 @@ export default class QuizData extends Component {
   }
 
   sanitize(str) {
-    const sanitized = str.replace(/on\w*\W*\w*\W*/igm, "")  // remove binded events
-                         .replace(/\r?\n|\r/g,"")           // remove new line
-                         .replace(/>\s+</g,"><")            // remove space between el
+    const sanitized = str.replace(/on\w*(\s+=|=)(\s+\"|\")\w*\W*(\s+\"|\")/igm, "")  // remove binded events
+                         .replace(/\r?\n|\r/g,"")                                    // remove new line
+                         .replace(/>\s+</g,"><")                                     // remove space between el
                          .trim();
     return sanitized
   }
