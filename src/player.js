@@ -120,7 +120,7 @@ export default class {
       'quiz2': data2
     }
 
-    setTimeout(() => done(null, data[src]), 1000);
+    setTimeout(() => done(null, data[src]), 300);
   }
 
   finish(id) {
