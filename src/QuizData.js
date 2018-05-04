@@ -45,8 +45,8 @@ export default class QuizData extends Component {
     this.setState({ data })
   }
 
-  finish(id) {
-    this.player.finish(id)
+  finish() {
+    this.player.finish()
   }
 
   sanitize(str) {

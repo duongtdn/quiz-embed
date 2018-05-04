@@ -33,7 +33,7 @@ export default class {
     source.postMessage('quizPlayer.pong', origin)
   }
 
-  loadQuiz() {
+  loadQuiz() { 
     const {source, origin, data} = this._evt;
     if (!source && !data) { return }
     const [cmd, src] = data.split('/')
@@ -50,8 +50,9 @@ export default class {
   }
 
   getQuizData(src, done) {
-    const question = `
+    const question1 = `
       <div> 
+        <p> Quiz 1</p>
         <p> Select an answer for this question </p>
         <p> What are your gender </p>
         <form class="w3-container w3-card-4">
@@ -72,15 +73,54 @@ export default class {
         <button id="btn-continue">Continue</button>
       </div>
     `
-    const data = {
-      question,
+
+    const question2 = `
+      <div> 
+        <p> Quiz 2</p>
+        <p> Select an answer for this question </p>
+        <p> What is your job </p>
+        <form class="w3-container w3-card-4">
+          <p>
+            <input id="$0" class="w3-radio" type="radio" name="gender" onchange="xss()" value="Engineer">
+            <label>Engineer</label>
+          </p>
+          <p>
+            <input id="$1" class="w3-radio" type="radio" name="gender" ONKEYPRESS = "xss()" value="Doctor">
+            <label>Doctor</label>
+          </p>
+          <p>
+            <input id="$2" class="w3-radio" type="radio" name="gender" ONKEYPRESS = "xss()" value="female">
+            <label>Other</label>
+          </p>
+        </form>
+        <hr />
+        <button id="btn-continue">Continue</button>
+      </div>
+    `
+    const data1 = {
+      question: question1,
       answer: {
         '$0': true,
         '$1': false,
         '$2': false
       }
     }
-    setTimeout(() => done(null, data), 1000);
+
+    const data2 = {
+      question: question2,
+      answer: {
+        '$0': true,
+        '$1': false,
+        '$2': false
+      }
+    }
+
+    const data = {
+      'quiz1': data1,
+      'quiz2': data2
+    }
+
+    setTimeout(() => done(null, data[src]), 1000);
   }
 
   finish(id) {
