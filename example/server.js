@@ -18,6 +18,10 @@ app.get('/quiz/index.html', (req, res) => {
   res.sendFile(path.join(__dirname, '/index.html'))
 })
 
+app.get('/w3.css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'css/w3.css'))
+})
+
 app.listen(3100)
 
 console.log('Example Server is listening at localhost:3100')
