@@ -52,10 +52,9 @@ export default class {
   getQuizData(src, done) {
     const question1 = `
       <div> 
-        <p> Quiz 1</p>
         <p> Select an answer for this question </p>
         <p> What are your gender </p>
-        <form class="w3-container w3-card-4">
+        <form class="w3-container">
           <p>
             <input id="$0" class="w3-radio" type="radio" name="gender" onchange="xss()" value="male">
             <label>Male</label>
@@ -69,17 +68,15 @@ export default class {
             <label>Other</label>
           </p>
         </form>
-        <hr />
-        <button id="btn-continue">Continue</button>
+
       </div>
     `
 
     const question2 = `
       <div> 
-        <p> Quiz 2</p>
         <p> Select an answer for this question </p>
         <p> What is your job </p>
-        <form class="w3-container w3-card-4">
+        <form class="w3-container">
           <p>
             <input id="$0" class="w3-radio" type="radio" name="gender" onchange="xss()" value="Engineer">
             <label>Engineer</label>
@@ -97,23 +94,29 @@ export default class {
         <button id="btn-continue">Continue</button>
       </div>
     `
-    const data1 = {
-      question: question1,
-      answer: {
-        '$0': true,
-        '$1': false,
-        '$2': false
+    const data1 = [
+      {
+        title: 'Quiz 1: What is your gender?',
+        question: question1,
+        answer: {
+          '$0': true,
+          '$1': false,
+          '$2': false
+        }
       }
-    }
+    ]
 
-    const data2 = {
-      question: question2,
-      answer: {
-        '$0': true,
-        '$1': false,
-        '$2': false
+    const data2 = 
+      {
+        title: 'Quiz 2',
+        question: question2,
+        answer: {
+          '$0': true,
+          '$1': false,
+          '$2': false
+        }
       }
-    }
+    
 
     const data = {
       'quiz1': data1,

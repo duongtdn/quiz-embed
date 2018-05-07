@@ -10,6 +10,10 @@ export default class Quiz extends Component {
   constructor(props) {
     super (props);
 
+    this.state = {
+      index: 0
+    }
+
     this.userAnswer = {};
 
   }
@@ -17,10 +21,14 @@ export default class Quiz extends Component {
   render() {
     if (this.props.data) {
       // bind event to user answer object such as checkbox, radio or text box
-      const quiz = this.bindEvent(this.props.data)
+      const quiz = this.bindEvent(this.props.data[this.state.index])
       return (
-        <div>
-          {quiz}
+        <div className = 'quiz' >
+          {this._renderHeader()}
+          <div className='w3-container'>
+            {quiz}
+          </div>
+          {this._renderFooter()}
         </div>
       )
     } else {
@@ -33,8 +41,45 @@ export default class Quiz extends Component {
     
   }
 
+  _renderHeader() {
+    const data = this.props.data;
+    const quiz = data[this.state.index]
+    return (
+      <div className='w3-container' style={{padding:'8px 16px'}} >
+        <div className='w3-cell-middle w3-large' style={{display:'inline-block'}} > {quiz.title} </div>
+        <div className='w3-right' style={{display:'inline-block'}} >
+          <button className='w3-button' > <i className='fa fa-arrow-left' /> </button>
+          {
+            data.map( (quiz,index) => {
+              let _class = 'w3-cell-middle circle circle-border circle-queue ';
+              if (index === this.state.index) {
+                _class += 'circle-current '
+              }
+              return (
+                <div key={index} className={_class} />
+              )
+            })
+          }
+          <button className='w3-button' > <i className='fa fa-arrow-right' /> </button>
+        </div>
+      </div>
+    )
+  }
+
+  _renderFooter() {
+    return (
+      <div className='w3-container w3-padding w3-border-top w3-bottom'>
+        <button id="btn-submit" className='w3-button w3-blue'> Submit </button>
+        <button id="btn-hint" className='w3-button w3-right w3-text-blue'> Hint </button>
+        {/* <button id="btn-continue">Submit</button> */}
+      </div>
+    )
+  }
+
   onRadioChange(id, evt) {
-    const correctAnswer = this.props.data.answer;
+    const data = this.props.data;
+    const quiz = data[this.state.index]
+    const correctAnswer = quiz.answer;
     for (let qid in correctAnswer) {
       if (qid === id) {
         this.userAnswer[qid] = evt.target.checked;

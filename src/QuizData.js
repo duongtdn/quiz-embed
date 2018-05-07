@@ -39,10 +39,15 @@ export default class QuizData extends Component {
   }
 
   onLoaded(data) {
-    if (data && data.question) {
-      data.question = this.sanitize(data.question)
+    if (data && data.length > 0) {
+      const sanitized = data.map( quiz => {
+        if (quiz.question) {
+          quiz.question = this.sanitize(quiz.question)
+        }
+        return quiz
+      })
+      this.setState({ data: sanitized })
     }
-    this.setState({ data })
   }
 
   finish() {

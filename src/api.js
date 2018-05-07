@@ -16,6 +16,7 @@ export default class Player {
     const iframe = document.createElement('iframe');
     iframe.setAttribute('id', playerId);
     iframe.setAttribute('src', SRC)
+    iframe.setAttribute('style', 'border: 1px solid #aaa')
 
     div.parentNode.replaceChild(iframe, div);
 
