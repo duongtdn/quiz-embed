@@ -16,6 +16,8 @@ export default class Quiz extends Component {
 
     this.userAnswer = {};
 
+    ['next', 'previous'].forEach( method => this[method] = this[method].bind(this))
+
   }
 
   render() {
@@ -48,7 +50,7 @@ export default class Quiz extends Component {
       <div className='w3-container' style={{padding:'8px 16px'}} >
         <div className='w3-cell-middle w3-large' style={{display:'inline-block'}} > {quiz.title} </div>
         <div className='w3-right' style={{display:'inline-block'}} >
-          <button className='w3-button' > <i className='fa fa-arrow-left' /> </button>
+          <button className='w3-button' onClick={this.previous} > <i className='fa fa-arrow-left' /> </button>
           {
             data.map( (quiz,index) => {
               let _class = 'w3-cell-middle circle circle-border circle-queue ';
@@ -60,7 +62,7 @@ export default class Quiz extends Component {
               )
             })
           }
-          <button className='w3-button' > <i className='fa fa-arrow-right' /> </button>
+          <button className='w3-button' onClick={this.next}> <i className='fa fa-arrow-right' /> </button>
         </div>
       </div>
     )
@@ -154,6 +156,16 @@ export default class Quiz extends Component {
     const el = renderHTML(quiz.question);
     return deepClone(el);
 
+  }
+
+  next() {
+    const index = this.state.index + 1;
+    this.setState({ index })
+  }
+
+  previous() {
+    const index = this.state.index - 1;
+    this.setState({ index })
   }
 
 }

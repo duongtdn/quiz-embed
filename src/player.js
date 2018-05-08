@@ -90,14 +90,22 @@ export default class {
             <label>Other</label>
           </p>
         </form>
-        <hr />
-        <button id="btn-continue">Continue</button>
+        
       </div>
     `
     const data1 = [
       {
         title: 'Quiz 1: What is your gender?',
         question: question1,
+        answer: {
+          '$0': true,
+          '$1': false,
+          '$2': false
+        }
+      },
+      {
+        title: 'Quiz 2: What is your job',
+        question: question2,
         answer: {
           '$0': true,
           '$1': false,
