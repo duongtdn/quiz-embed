@@ -11,7 +11,8 @@ export default class Quiz extends Component {
     super (props);
 
     this.state = {
-      index: 0
+      index: 0,
+      answer: {}
     }
 
     this.userAnswer = {};
@@ -20,15 +21,26 @@ export default class Quiz extends Component {
 
   }
 
+  componentWillReceiveProps(props) {
+    console.log('receive props')
+    if (props.data && props.data.length > 0) {
+      this.quizs = props.data.map(quiz => {
+        quiz.renderQuestion = () => this.renderQuestion(quiz);
+        return quiz;
+      })
+    }
+
+  }
+
   render() {
-    if (this.props.data) {
+    if (this.quizs) {
       // bind event to user answer object such as checkbox, radio or text box
-      const quiz = this.bindEvent(this.props.data[this.state.index])
+      const quiz = this.quizs[this.state.index]
       return (
         <div className = 'quiz' >
           {this._renderHeader()}
           <div className='w3-container'>
-            {quiz}
+            {quiz.renderQuestion()}
           </div>
           {this._renderFooter()}
         </div>
@@ -44,15 +56,14 @@ export default class Quiz extends Component {
   }
 
   _renderHeader() {
-    const data = this.props.data;
-    const quiz = data[this.state.index]
+    const quiz = this.quizs[this.state.index]
     return (
       <div className='w3-container' style={{padding:'8px 16px'}} >
         <div className='w3-cell-middle w3-large' style={{display:'inline-block'}} > {quiz.title} </div>
         <div className='w3-right' style={{display:'inline-block'}} >
           <button className='w3-button' onClick={this.previous} > <i className='fa fa-arrow-left' /> </button>
           {
-            data.map( (quiz,index) => {
+            this.quizs.map( (quiz,index) => {
               let _class = 'w3-cell-middle circle circle-border circle-queue ';
               if (index === this.state.index) {
                 _class += 'circle-current '
@@ -81,24 +92,27 @@ export default class Quiz extends Component {
   onRadioChange(id, evt) {
     const data = this.props.data;
     const quiz = data[this.state.index]
+
     const correctAnswer = quiz.answer;
+    const answer = {};
+
     for (let qid in correctAnswer) {
+      answer[qid] = false;
       if (qid === id) {
-        this.userAnswer[qid] = evt.target.checked;
-      } else {
-        this.userAnswer[qid] = false;
+        answer[qid] = !this.state.answer[id];
       }
     }
-    console.log(this.userAnswer)
+    this.setState ({ answer })
   }
 
   finish(id, evt) {
     this.props.finish(id);
   }
 
-  bindEvent(quiz) {
+  renderQuestion(quiz) {
 
     const answer = quiz.answer;
+    const prop = {};
     
     const deepClone = (el) => {
       let children = [];
@@ -108,23 +122,21 @@ export default class Quiz extends Component {
       if (el.props.children) {
         children = React.Children.map(el.props.children, child => deepClone(child))
       }
-      /* bind events to elmenent */
-      let event = '';
-      let fn = '';
 
+      /* bind events to elmenent */
       if (el.props.id && el.props.id in answer) {
         if (el.type && el.type === 'input') {
-          event = 'onChange';
           const type = el.props.type || '';
           switch (type) {
             case 'radio':
-              fn = 'onRadioChange';
+              prop.onChange = (evt) => this.onRadioChange(el.props.id, evt);
+              prop.checked = this.state.answer[el.props.id] || false;
               break
             case 'checkbox':
-              fn = 'onCheckboxChange';
+              
               break
             case 'text':
-              fn = 'onTextChange';
+              
               break
             default:
               throw new Error('Only support radio, checkbox and text in answer input')
@@ -135,22 +147,12 @@ export default class Quiz extends Component {
         }          
       }
 
-      if (el.props.id && el.props.id === 'btn-continue') {
-        event = 'onClick';
-        fn = 'finish';
+      if (children.length > 0) {
+        return React.cloneElement(el, {}, children)
+      } else {
+        return React.cloneElement(el, prop);
       }
 
-      if (fn.length > 0) {
-        const prop = {};
-        prop[event] = (evt) => this[fn](el.props.id, evt);
-        return React.cloneElement(el, prop)  
-      } else {
-        if (children.length > 0) {
-          return React.cloneElement(el, {}, children)
-        } else {
-          return el;
-        }
-      }
     }
 
     const el = renderHTML(quiz.question);
@@ -160,12 +162,12 @@ export default class Quiz extends Component {
 
   next() {
     const index = this.state.index + 1;
-    this.setState({ index })
+    this.setState({ index, answer: {} })
   }
 
   previous() {
     const index = this.state.index - 1;
-    this.setState({ index })
+    this.setState({ index, answer: {} })
   }
 
 }
