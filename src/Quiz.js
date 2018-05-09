@@ -22,7 +22,6 @@ export default class Quiz extends Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log('receive props')
     if (props.data && props.data.length > 0) {
       this.quizs = props.data.map(quiz => {
         quiz.renderQuestion = () => this.renderQuestion(quiz);
@@ -170,7 +169,7 @@ export default class Quiz extends Component {
 
   previous() {
     const index = this.state.index - 1;
-    if (index > 0) {
+    if (index >= 0) {
       this.setState({ index, answer: {} })
     }
     
