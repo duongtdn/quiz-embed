@@ -60,7 +60,7 @@ export default class Quiz extends Component {
       <div className='w3-container' style={{padding:'8px 16px'}} >
         <div className='w3-cell-middle w3-large' style={{display:'inline-block'}} > {quiz.title} </div>
         <div className='w3-right' style={{display:'inline-block'}} >
-          <button className='w3-button' onClick={this.previous} > <i className='fa fa-arrow-left' /> </button>
+          <button className='w3-button no-outline' onClick={this.previous} > <i className='fa fa-arrow-left' /> </button>
           {
             this.quizs.map( (quiz,index) => {
               let _class = 'w3-cell-middle circle circle-border circle-queue ';
@@ -72,7 +72,7 @@ export default class Quiz extends Component {
               )
             })
           }
-          <button className='w3-button' onClick={this.next}> <i className='fa fa-arrow-right' /> </button>
+          <button className='w3-button no-outline' onClick={this.next}> <i className='fa fa-arrow-right' /> </button>
         </div>
       </div>
     )
@@ -81,9 +81,8 @@ export default class Quiz extends Component {
   _renderFooter() {
     return (
       <div className='w3-container w3-padding w3-border-top w3-bottom'>
-        <button id="btn-submit" className='w3-button w3-blue'> Submit </button>
+        <button id="btn-submit" className='w3-button w3-blue'  > Submit </button>
         <button id="btn-hint" className='w3-button w3-right w3-text-blue'> Hint </button>
-        {/* <button id="btn-continue">Submit</button> */}
       </div>
     )
   }
