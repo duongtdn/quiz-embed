@@ -162,12 +162,20 @@ export default class Quiz extends Component {
 
   next() {
     const index = this.state.index + 1;
-    this.setState({ index, answer: {} })
+    if (index < this.quizs.length) {
+      this.setState({ index, answer: {} })
+    }
+    
   }
 
   previous() {
     const index = this.state.index - 1;
-    this.setState({ index, answer: {} })
+    if (index > 0) {
+      this.setState({ index, answer: {} })
+    }
+    
   }
+
+
 
 }
