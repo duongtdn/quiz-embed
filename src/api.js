@@ -16,9 +16,11 @@ export default class Player {
     const iframe = document.createElement('iframe');
     iframe.setAttribute('id', playerId);
     iframe.setAttribute('src', SRC)
-    iframe.setAttribute('style', 'border: 1px solid #aaa')
+    iframe.style.border = '1px solid #aaa'
 
     div.parentNode.replaceChild(iframe, div);
+
+    this.iframe = iframe;
 
     /* store content windoe handler */
     this.quizWindow = iframe.contentWindow;
@@ -58,6 +60,7 @@ export default class Player {
 
     if (/^quizPlayer.height/.test(e.data)) {
       const [cmd, height] = e.data.split('/');
+      this.iframe.style.height = height + 'px';
       this.events && this.events.onResize && this.events.onResize(height);
     }
 
