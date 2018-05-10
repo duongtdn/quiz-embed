@@ -116,9 +116,9 @@ export default class {
       }
     ]
 
-    const data2 = 
+    const data2 = [
       {
-        title: 'Quiz 2',
+        title: 'Quiz 3: It is similar to quiz 2',
         question: question2,
         answer: {
           '$0': true,
@@ -126,6 +126,7 @@ export default class {
           '$2': false
         }
       }
+    ]  
     
 
     const data = {
