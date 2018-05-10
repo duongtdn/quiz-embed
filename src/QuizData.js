@@ -18,11 +18,13 @@ export default class QuizData extends Component {
 
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.player = new Player({
       onError: this.onError.bind(this),
       onLoaded: this.onLoaded.bind(this)
-    });
+    }); 
+    const body = document.getElementsByTagName("BODY")[0];
+    body.onresize = this.player.notifyBodyHeight
   }
 
   render() {
@@ -30,6 +32,7 @@ export default class QuizData extends Component {
       <Quiz data = {this.state.data}
             error = {this.state.error}
             finish = {this.finish}
+            notifyBodyHeight = {this.player.notifyBodyHeight}
       />
     )
   }

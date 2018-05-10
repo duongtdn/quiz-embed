@@ -3,7 +3,6 @@
 import React, { Component } from 'react'
 import renderHTML from 'react-render-html'; 
 
-import Player from './player'
 import { _ } from './util'
 
 export default class Quiz extends Component {
@@ -35,6 +34,7 @@ export default class Quiz extends Component {
   }
 
   render() {
+    setTimeout(() => this.props.notifyBodyHeight(), 0)  // it's quite tricky here
     if (this.quizs) {
       // bind event to user answer object such as checkbox, radio or text box
       const quiz = this.quizs[this.state.index]
@@ -55,7 +55,7 @@ export default class Quiz extends Component {
         </div>
       )
     }
-    
+   
   }
 
   _renderHeader() {
@@ -120,7 +120,7 @@ export default class Quiz extends Component {
   }
 
   renderQuestion(quiz) {
-
+    
     const answer = quiz.answer;
     const prop = {};
     

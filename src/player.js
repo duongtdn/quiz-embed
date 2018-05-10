@@ -8,6 +8,8 @@ export default class {
   constructor(events) {
     this.events = events;
     window.addEventListener('message', this.receiveMessage.bind(this));
+
+    this.notifyBodyHeight = this.notifyBodyHeight.bind(this);
   }
 
   receiveMessage(e) {
@@ -138,6 +140,18 @@ export default class {
     const {source, origin} = this._evt;
     if (!source) { return }
     source.postMessage('quizPlayer.finish', origin)
+  }
+
+  notifyBodyHeight() {
+    if (!this._evt) { return }
+    const {source, origin} = this._evt;
+    if (!source) { return }
+
+    const height = document.body.scrollHeight;
+    if (parseInt(height) === 0) { return }
+
+    source.postMessage(`quizPlayer.height/${height}`, origin)
+    
   }
 
 }
