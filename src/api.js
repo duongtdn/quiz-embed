@@ -55,6 +55,12 @@ export default class Player {
       default:
         break
     }
+
+    if (/^quizPlayer.height/.test(e.data)) {
+      const [cmd, height] = e.data.split('/');
+      this.events && this.events.onResize && this.events.onResize(height);
+    }
+
   }
 
   _post(message) {
