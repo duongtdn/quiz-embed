@@ -61,7 +61,7 @@ export default class Quiz extends Component {
   _renderHeader() {
     const quiz = this.quizs[this.state.index]
     return (
-      <div className='w3-container' style={{padding:'8px 16px'}} >
+      <div className='w3-container w3-green' style={{padding:'8px 16px'}} >
         <div className='w3-cell-middle w3-large' style={{display:'inline-block'}} > {quiz.title} </div>
         <div className='w3-right' style={{display:'inline-block'}} >
           <button className='w3-button no-outline' onClick={this.previous} > <i className='fa fa-arrow-left' /> </button>
@@ -90,7 +90,7 @@ export default class Quiz extends Component {
     const _showNextBtn = this.state.check ? '' : 'w3-hide';
 
     return (
-      <div className='w3-container w3-padding w3-border-top w3-bottom'>
+      <div className='w3-container w3-padding w3-border-top w3-bottom w3-white'>
         <button id="btn-submit" className={`w3-button w3-blue ${_showSubmitBtn}`} onClick={this.submit} > Submit </button>
         <button id="btn-next" className={`w3-button w3-teal ${_showNextBtn}`} onClick={this.next} > 
           Next <i className='fa fa-arrow-right' />
