@@ -17,7 +17,8 @@ export default class Quiz extends Component {
 
     this.userAnswer = {};
 
-    ['next', 'previous'].forEach( method => this[method] = this[method].bind(this))
+    ['next', 'previous', 'submit']
+    .forEach( method => this[method] = this[method].bind(this))
 
   }
 
@@ -81,15 +82,14 @@ export default class Quiz extends Component {
   _renderFooter() {
     return (
       <div className='w3-container w3-padding w3-border-top w3-bottom'>
-        <button id="btn-submit" className='w3-button w3-blue'  > Submit </button>
+        <button id="btn-submit" className='w3-button w3-blue' onClick={this.submit} > Submit </button>
         <button id="btn-hint" className='w3-button w3-right w3-text-blue'> Hint </button>
       </div>
     )
   }
 
   onRadioChange(id, evt) {
-    const data = this.props.data;
-    const quiz = data[this.state.index]
+    const quiz = this.quizs[this.state.index]
 
     const correctAnswer = quiz.answer;
     const answer = {};
@@ -100,7 +100,7 @@ export default class Quiz extends Component {
         answer[qid] = !this.state.answer[id];
       }
     }
-    this.setState ({ answer })
+    this.setState ({ answer, check: null })
   }
 
   finish(id, evt) {
@@ -120,35 +120,15 @@ export default class Quiz extends Component {
       if (el.props.children) {
         children = React.Children.map(el.props.children, child => deepClone(child))
       }
-
       /* bind events to elmenent */
       if (el.props.id && el.props.id in answer) {
-        if (el.type && el.type === 'input') {
-          const type = el.props.type || '';
-          switch (type) {
-            case 'radio':
-              prop.onChange = (evt) => this.onRadioChange(el.props.id, evt);
-              prop.checked = this.state.answer[el.props.id] || false;
-              break
-            case 'checkbox':
-              
-              break
-            case 'text':
-              
-              break
-            default:
-              throw new Error('Only support radio, checkbox and text in answer input')
-              break
-          }
-        } else {
-          throw new Error('The answer must be an input type')
-        }          
-      }
-
-      if (children.length > 0) {
-        return React.cloneElement(el, {}, children)
+        return this._bindEventAndProp(el);
       } else {
-        return React.cloneElement(el, prop);
+        if (children.length > 0) {
+          return React.cloneElement(el, {}, children)
+        } else {
+          return el;
+        }
       }
 
     }
@@ -158,10 +138,50 @@ export default class Quiz extends Component {
 
   }
 
+  _bindEventAndProp(el) {
+    const prop = {}
+    if (el.type && el.type === 'input') {
+      const type = el.props.type || '';
+      switch (type) {
+        case 'radio':
+          prop.onChange = (evt) => this.onRadioChange(el.props.id, evt);
+          prop.checked = this.state.answer[el.props.id] || false;
+          break
+        case 'checkbox':
+          
+          break
+        case 'text':
+          
+          break
+        default:
+          throw new Error('Only support radio, checkbox and text in answer input')
+          break
+      }
+    } else {
+      throw new Error('The answer must be an input type')
+    }
+    return this._wrapCheck(React.cloneElement(el, prop));
+  }
+
+  _wrapCheck(el) {
+    const id = el.props.id;
+    const display = this.state.check && this.state.answer[id]? 'w3-show' : 'w3-hide';
+    const color = this.state.check && this.state.check[id] ? 'w3-text-green' : 'w3-text-red'
+    const correct =  this.state.check && this.state.check[id] ? 'fa-check' : 'fa-close'
+    return (
+      <label>
+        <label style={{display:'inline-block', width: '16px', height: '16px'}}>
+          <i className={`fa ${correct} ${display} ${color}`} />
+        </label>
+        {el}
+      </label>
+    )
+  }
+
   next() {
     const index = this.state.index + 1;
     if (index < this.quizs.length) {
-      this.setState({ index, answer: {} })
+      this.setState({ index, answer: {}, check: null })
     }
     
   }
@@ -169,11 +189,29 @@ export default class Quiz extends Component {
   previous() {
     const index = this.state.index - 1;
     if (index >= 0) {
-      this.setState({ index, answer: {} })
+      this.setState({ index, answer: {}, check: null  })
     }
     
   }
 
+  submit() {
+    this._checkAnswer();
+  }
 
+  _checkAnswer() {
+    const quiz = this.quizs[this.state.index]
+    const correctAnswer = quiz.answer;
+    const check = {};
+    for (let id in correctAnswer) {
+      check[id] = true;
+      if (this.state.answer[id] === null ||  this.state.answer[id] === undefined) {
+        check[id] = false;
+      }
+      if (this.state.answer[id] !== correctAnswer[id]) {
+        check[id] = false;
+      }
+    }
+    this.setState({ check });
+  }
 
 }

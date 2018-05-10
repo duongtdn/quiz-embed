@@ -54,7 +54,7 @@ export default class {
       <div> 
         <p> Select an answer for this question </p>
         <p> What are your gender </p>
-        <form class="w3-container">
+        <form class="">
           <p>
             <input id="$0" class="w3-radio" type="radio" name="gender" onchange="xss()" value="male">
             <label>Male</label>
@@ -76,7 +76,7 @@ export default class {
       <div> 
         <p> Select an answer for this question </p>
         <p> What is your job </p>
-        <form class="w3-container">
+        <form >
           <p>
             <input id="$0" class="w3-radio" type="radio" name="gender" onchange="xss()" value="Engineer">
             <label>Engineer</label>
