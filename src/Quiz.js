@@ -91,11 +91,11 @@ export default class Quiz extends Component {
 
     return (
       <footer className='w3-container w3-padding w3-border-top w3-white'>
-        <button id="btn-submit" className={`w3-button w3-blue ${_showSubmitBtn}`} onClick={this.submit} > Submit </button>
-        <button id="btn-next" className={`w3-button w3-teal ${_showNextBtn}`} onClick={this.next} > 
+        <button id="btn-submit" className={`w3-button w3-blue no-outline ${_showSubmitBtn}`} onClick={this.submit} > Submit </button>
+        <button id="btn-next" className={`w3-button w3-teal no-outline ${_showNextBtn}`} onClick={this.next} > 
           Next <i className='fa fa-arrow-right' />
         </button>
-        <button id="btn-hint" className='w3-button w3-right w3-text-blue'> Hint </button>
+        <button id="btn-hint" className='w3-button w3-right w3-text-blue no-outline'> Hint </button>
       </footer>
     )
   }
