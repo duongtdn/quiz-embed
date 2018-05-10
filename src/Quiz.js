@@ -13,6 +13,7 @@ export default class Quiz extends Component {
     this.state = {
       index: 0,
       answer: {},
+      check: null
     }
 
     this.userAnswer = {};
@@ -28,6 +29,7 @@ export default class Quiz extends Component {
         quiz.renderQuestion = () => this.renderQuestion(quiz);
         return quiz;
       })
+      this.setState({index: 0, answer: {}, check: null})
     }
 
   }
