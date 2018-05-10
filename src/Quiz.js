@@ -65,6 +65,9 @@ export default class Quiz extends Component {
           {
             this.quizs.map( (quiz,index) => {
               let _class = 'w3-cell-middle circle circle-border circle-queue ';
+              if (quiz.completed) {
+                _class += 'circle-done '
+              }
               if (index === this.state.index) {
                 _class += 'circle-current '
               }
@@ -82,10 +85,13 @@ export default class Quiz extends Component {
   _renderFooter() {
     const _showSubmitBtn = this.state.check ? 'w3-hide' : '';
     const _showNextBtn = this.state.check ? '' : 'w3-hide';
+
     return (
       <div className='w3-container w3-padding w3-border-top w3-bottom'>
         <button id="btn-submit" className={`w3-button w3-blue ${_showSubmitBtn}`} onClick={this.submit} > Submit </button>
-        <button id="btn-next" className={`w3-button w3-orange ${_showNextBtn}`} onClick={this.next} > Next </button>
+        <button id="btn-next" className={`w3-button w3-teal ${_showNextBtn}`} onClick={this.next} > 
+          Next <i className='fa fa-arrow-right' />
+        </button>
         <button id="btn-hint" className='w3-button w3-right w3-text-blue'> Hint </button>
       </div>
     )
@@ -205,15 +211,19 @@ export default class Quiz extends Component {
     const quiz = this.quizs[this.state.index]
     const correctAnswer = quiz.answer;
     const check = {};
+    let completed = true;
     for (let id in correctAnswer) {
       check[id] = true;
       if (this.state.answer[id] === null ||  this.state.answer[id] === undefined) {
         check[id] = false;
+        completed = false;
       }
       if (this.state.answer[id] !== correctAnswer[id]) {
         check[id] = false;
+        completed = false;
       }
     }
+    quiz.completed = completed;
     this.setState({ check });
   }
 
