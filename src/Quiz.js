@@ -12,7 +12,7 @@ export default class Quiz extends Component {
 
     this.state = {
       index: 0,
-      answer: {}
+      answer: {},
     }
 
     this.userAnswer = {};
@@ -38,6 +38,7 @@ export default class Quiz extends Component {
       const quiz = this.quizs[this.state.index]
       return (
         <div className = 'quiz' >
+          {this.state.modal? this._rendermodal() : ''}
           {this._renderHeader()}
           <div className='w3-container'>
             {quiz.renderQuestion()}
@@ -191,6 +192,8 @@ export default class Quiz extends Component {
     const index = this.state.index + 1;
     if (index < this.quizs.length) {
       this.setState({ index, answer: {}, check: null })
+    } else {
+      this.finish();
     }
     
   }
