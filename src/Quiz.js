@@ -115,6 +115,20 @@ export default class Quiz extends Component {
     this.setState ({ answer, check: null })
   }
 
+  onCheckBoxChange(id, evt) {
+    const quiz = this.quizs[this.state.index]
+
+    const correctAnswer = quiz.answer;
+    const answer = this.state.answer;
+
+    for (let qid in correctAnswer) {
+      if (qid === id) {
+        answer[qid] = !this.state.answer[id];
+      }
+    }
+    this.setState ({ answer, check: null })
+  }
+
   finish(id, evt) {
     this.props.finish(id);
   }
@@ -160,7 +174,8 @@ export default class Quiz extends Component {
           prop.checked = this.state.answer[el.props.id] || false;
           break
         case 'checkbox':
-          
+          prop.onChange = (evt) => this.onCheckBoxChange(el.props.id, evt);
+          prop.checked = this.state.answer[el.props.id] || false;
           break
         case 'text':
           
@@ -177,7 +192,10 @@ export default class Quiz extends Component {
 
   _wrapCheck(el) {
     const id = el.props.id;
-    const display = this.state.check && this.state.answer[id]? 'w3-show' : 'w3-hide';
+    const quiz = this.quizs[this.state.index]
+    const correctAnswer = quiz.answer;
+
+    const display = this.state.check && (this.state.answer[id] || correctAnswer[id])? 'w3-show' : 'w3-hide';
     const color = this.state.check && this.state.check[id] ? 'w3-text-green' : 'w3-text-red'
     const correct =  this.state.check && this.state.check[id] ? 'fa-check' : 'fa-close'
     return (
@@ -217,11 +235,25 @@ export default class Quiz extends Component {
     const correctAnswer = quiz.answer;
     const check = {};
     let completed = true;
+
+    // check if user has answer
+    let answered = false;
+    for (let id in this.state.answer) {
+      if (this.state.answer[id]) {
+        answered = true;
+      }
+    }
+    if (!answered) {
+      this.setState({ check: null });
+      return
+    }
+
+    // check each answer correct or not
     for (let id in correctAnswer) {
       check[id] = true;
       if (this.state.answer[id] === null ||  this.state.answer[id] === undefined) {
-        this.setState({ check: null });
-        return
+        check[id] = false;
+        completed = false;
       }
       if (this.state.answer[id] !== correctAnswer[id]) {
         check[id] = false;

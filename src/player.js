@@ -95,6 +95,29 @@ export default class {
         
       </div>
     `
+
+    const question3 = `
+      <div> 
+      <p> Select answers for this question </p>
+      <p> What are your domain </p>
+      <form >
+        <p>
+          <input id="$0" class="w3-check" type="checkbox" name="gender" onchange="xss()" value="Embedded Software">
+          <label>Embedded Software</label>
+        </p>
+        <p>
+          <input id="$1" class="w3-check" type="checkbox" name="gender" ONKEYPRESS = "xss()" value="Fullstack web design">
+          <label>Fullstack web design</label>
+        </p>
+        <p>
+          <input id="$2" class="w3-check" type="checkbox" name="gender" ONKEYPRESS = "xss()" value="Mobile Application">
+          <label>Mobile Application</label>
+        </p>
+      </form>
+      
+    </div>
+    `
+
     const data1 = [
       {
         title: 'Quiz 1: What is your gender?',
@@ -113,7 +136,16 @@ export default class {
           '$1': false,
           '$2': false
         }
-      }
+      },
+      {
+        title: 'Quiz 3: What is your domain',
+        question: question3,
+        answer: {
+          '$0': true,
+          '$1': true,
+          '$2': false
+        }
+      },
     ]
 
     const data2 = [
