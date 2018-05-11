@@ -129,6 +129,20 @@ export default class Quiz extends Component {
     this.setState ({ answer, check: null })
   }
 
+  onTextChange(id, evt) {
+    const quiz = this.quizs[this.state.index]
+
+    const correctAnswer = quiz.answer;
+    const answer = this.state.answer;
+
+    for (let qid in correctAnswer) {
+      if (qid === id) {
+        answer[qid] = evt.target.value;
+      }
+    }
+    this.setState ({ answer, check: null })
+  }
+
   finish(id, evt) {
     this.props.finish(id);
   }
@@ -178,7 +192,8 @@ export default class Quiz extends Component {
           prop.checked = this.state.answer[el.props.id] || false;
           break
         case 'text':
-          
+          prop.style = { padding: 0, display: 'inline-block', ...el.props.style };
+          prop.onKeyUp = (evt) => this.onTextChange(el.props.id, evt);
           break
         default:
           throw new Error('Only support radio, checkbox and text in answer input')
@@ -243,6 +258,7 @@ export default class Quiz extends Component {
         answered = true;
       }
     }
+console.log(answered)    
     if (!answered) {
       this.setState({ check: null });
       return
@@ -260,6 +276,7 @@ export default class Quiz extends Component {
         completed = false;
       }
     }
+console.log(check)    
     quiz.completed = completed;
     this.setState({ check });
   }
