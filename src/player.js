@@ -124,17 +124,26 @@ export default class {
       <p> 
         The official name of javascript is 
         <input id='$0' type='text' class='w3-input' style='width:90px' />. The lasted version is named as
-        <input id='$2' type='text' class='w3-input' style='width:60px' />
+        <input id='$1' type='text' class='w3-input' style='width:60px' />
       </p>
       <p> 
         The es6 is released in year 
-        <input id='$4' type='text' class='w3-input' style='width:60px' />.
+        <input id='$2' type='text' class='w3-input' style='width:60px' />.
       </p>
       
     </div>
     `
 
     const data1 = [
+      {
+        title: 'Quiz 5: Test your knowledge',
+        question: question5,
+        answer: {
+          '$0': 'ecmascript',
+          '$1': 'es2015',
+          '$2': '2015'
+        }
+      },
       {
         title: 'Quiz 1: What is your gender?',
         question: question1,

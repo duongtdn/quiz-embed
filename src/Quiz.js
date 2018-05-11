@@ -192,7 +192,12 @@ export default class Quiz extends Component {
           prop.checked = this.state.answer[el.props.id] || false;
           break
         case 'text':
-          prop.style = { padding: 0, display: 'inline-block', ...el.props.style };
+          prop.style = { 
+            padding: 0, 
+            display: 'inline-block',
+            ...el.props.style 
+          };
+          prop.className = 'w3-input w3-pale-yellow no-outline'
           prop.onKeyUp = (evt) => this.onTextChange(el.props.id, evt);
           break
         default:
@@ -258,7 +263,7 @@ export default class Quiz extends Component {
         answered = true;
       }
     }
-console.log(answered)    
+  
     if (!answered) {
       this.setState({ check: null });
       return
@@ -276,7 +281,6 @@ console.log(answered)
         completed = false;
       }
     }
-console.log(check)    
     quiz.completed = completed;
     this.setState({ check });
   }
