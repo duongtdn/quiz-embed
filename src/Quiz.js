@@ -272,15 +272,14 @@ export default class Quiz extends Component {
     // check each answer correct or not
     for (let id in correctAnswer) {
       check[id] = true;
-      if (this.state.answer[id] === null ||  this.state.answer[id] === undefined) {
-        check[id] = false;
-        completed = false;
-      }
-      if (this.state.answer[id] !== correctAnswer[id]) {
+      let ans = this.state.answer[id] || false;
+      if (ans !== correctAnswer[id]) {
         check[id] = false;
         completed = false;
       }
     }
+    console.log(check)
+    console.log(completed)
     quiz.completed = completed;
     this.setState({ check });
   }
