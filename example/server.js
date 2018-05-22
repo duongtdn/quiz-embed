@@ -26,6 +26,6 @@ app.get('/quiz.css', (req, res) => {
   res.sendFile(path.join(__dirname, 'css/quiz.css'))
 })
 
-app.listen(3100)
+app.listen(3200)
 
 console.log('Example Server is listening at localhost:3100')
