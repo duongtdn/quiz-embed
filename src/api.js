@@ -1,8 +1,8 @@
 "use strict"
 
-const SRC = 'http://localhost:3100/quiz/index.html';
+const SRC = 'http://localhost:3200/quiz/index.html';
 
-const QUIZ_ORIGIN = 'http://localhost:3100';
+const QUIZ_ORIGIN = 'http://localhost:3200';
 
 export default class Player {
   constructor(playerId, { playerVars, events }) {
