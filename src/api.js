@@ -7,15 +7,18 @@ const QUIZ_ORIGIN = 'http://localhost:3200';
 export default class Player {
   constructor(playerId, { playerVars, events }) {
 
-    /* create quiz player
-      replace <div /> with an <iframe />
-      use postMessage to communicate with iframe window
-    */
-   const div = document.getElementById(playerId);
+    if (!playerVars) {
+      playerVars = {};
+    }
+
+    const iframeSrc = playerVars.iframeSrc || SRC;
+    this.quizOrigin = playerVars.quizOrigin || QUIZ_ORIGIN;
+
+    const div = document.getElementById(playerId);
 
     const iframe = document.createElement('iframe');
     iframe.setAttribute('id', playerId);
-    iframe.setAttribute('src', SRC)
+    iframe.setAttribute('src', iframeSrc)
     iframe.style.border = '1px solid #aaa'
 
     div.parentNode.replaceChild(iframe, div);
@@ -38,7 +41,7 @@ export default class Player {
   }
 
   _receiveMessage(e) {
-    if (e.origin !== QUIZ_ORIGIN) {
+    if (e.origin !== this.quizOrigin) {
       return
     }
     switch (e.data) {
@@ -67,7 +70,7 @@ export default class Player {
   }
 
   _post(message) {
-    this.quizWindow.postMessage(message, QUIZ_ORIGIN);
+    this.quizWindow.postMessage(message, this.quizOrigin);
     return this;
   }
 

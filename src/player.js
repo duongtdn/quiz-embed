@@ -2,8 +2,6 @@
 
 import { validate } from './util'
 
-const ORIGIN = 'http://localhost:3100';
-
 export default class {
   constructor(events) {
     this.events = events;
