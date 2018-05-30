@@ -12,7 +12,7 @@ export default class Player {
     }
 
     const iframeSrc = playerVars.iframeSrc || SRC;
-    this.quizOrigin = playerVars.quizOrigin || QUIZ_ORIGIN;
+    this.quizOrigin = playerVars.origin || QUIZ_ORIGIN;
 
     const div = document.getElementById(playerId);
 
