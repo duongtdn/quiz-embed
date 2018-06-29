@@ -63,7 +63,7 @@ export default class Player {
 
     if (/^quizPlayer.height/.test(e.data)) {
       const [cmd, height] = e.data.split('/');
-      this.iframe.style.height = height + 'px';
+      // this.iframe.style.height = height + 'px';  // comment out as it cause unexpected animation in edge and safari
       this.events && this.events.onResize && this.events.onResize(height);
     }
 
