@@ -215,7 +215,7 @@ export default class {
     const height = document.body.scrollHeight;
     if (parseInt(height) === 0) { return }
 
-    source.postMessage(`quizPlayer.height/${height}`, origin)
+    source.postMessage(`quizPlayer.height/${height+2}`, origin)
     
   }
 
