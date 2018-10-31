@@ -278,8 +278,6 @@ export default class Quiz extends Component {
         completed = false;
       }
     }
-    console.log(check)
-    console.log(completed)
     quiz.completed = completed;
     this.setState({ check });
   }
