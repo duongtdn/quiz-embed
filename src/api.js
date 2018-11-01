@@ -20,6 +20,7 @@ export default class Player {
     iframe.setAttribute('id', playerId);
     iframe.setAttribute('src', iframeSrc)
     iframe.style.border = '1px solid #aaa'
+    iframe.style.width = '100%'
 
     div.parentNode.replaceChild(iframe, div);
 
