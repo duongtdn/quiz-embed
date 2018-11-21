@@ -273,6 +273,9 @@ export default class Quiz extends Component {
     for (let id in correctAnswer) {
       check[id] = true;
       let ans = this.state.answer[id] || false;
+      if (typeof ans === 'string') {
+        ans = ans.toLowerCase();
+      }
       if (ans !== correctAnswer[id]) {
         check[id] = false;
         completed = false;
